@@ -1,19 +1,17 @@
-import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Blog } from "@/components/Blog";
-import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="mx-auto w-full max-w-[1440px] px-4 lg:px-[110px]">
-        <Hero />
-        <ProjectGrid />
-        <Blog />
-      </main>
-      <Footer />
+    // Header and Footer are in layout.tsx (shared across all pages)
+    <div id="homepage" className="mx-auto w-full max-w-[1440px] px-4 lg:px-[110px]">
+      {/* Hero: edit src/content/hero.config.ts */}
+      <Hero />
+      {/* Projects: edit src/content/projects/ */}
+      <ProjectGrid />
+      {/* Blog: edit src/content/blog/ */}
+      <Blog />
     </div>
   );
 }
