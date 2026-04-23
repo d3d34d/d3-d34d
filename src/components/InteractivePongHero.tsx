@@ -330,7 +330,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationId);
     };
-  }, [initializeGame]);
+  }, [initializeGame, resetGame]);
 
   return (
     <canvas
