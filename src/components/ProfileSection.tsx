@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { profileConfig } from "@/content/profile.config";
-import { ScrambleText } from "./ScrambleText";
+import { SpecialText } from "./ui/special-text";
 
 interface RainingChar {
   char: string;
@@ -110,20 +110,15 @@ export const ProfileSection = () => {
 
           <div className="flex flex-col gap-2 font-mono text-sm md:text-base">
             <p className="text-primary font-bold mb-1">
-              <TypewriterText text="Portfolio Information:" />
-              <motion.span
-                animate={{ opacity: [1, 1, 0, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8, times: [0, 0.5, 0.51, 1], ease: "linear" }}
-                className="ml-1 inline-block h-[1em] w-[6px] bg-primary align-middle"
-              />
+              <SpecialText triggerOnHover={true} inView={true}>Portfolio Information:</SpecialText>
             </p>
             {profileConfig.details.map((detail, idx) => (
               <div key={detail.label} className="flex flex-col">
                 <span className="text-primary/70 text-xs md:text-sm leading-tight">
-                  <ScrambleText text={detail.label} delay={400 + idx * 100} />:
+                  <SpecialText triggerOnHover={true} delay={0.1 * idx}>{detail.label}</SpecialText>:
                 </span>
                 <span className="text-foreground leading-tight">
-                  <ScrambleText text={detail.value} delay={600 + idx * 100} />
+                  <SpecialText triggerOnHover={true} delay={0.2 * idx}>{detail.value}</SpecialText>
                 </span>
               </div>
             ))}
@@ -133,10 +128,10 @@ export const ProfileSection = () => {
         {/* Welcome Message */}
         <div className="flex flex-col gap-4">
           <h2 className="font-mono text-xl font-bold text-primary">
-            {profileConfig.welcomeTitle}
+            <SpecialText triggerOnHover={true} inView={true}>{profileConfig.welcomeTitle}</SpecialText>
           </h2>
           <p className="font-mono text-base leading-relaxed text-foreground/80">
-            {profileConfig.welcomeDescription}
+            <SpecialText triggerOnHover={true} inView={true} speed={10}>{profileConfig.welcomeDescription}</SpecialText>
           </p>
         </div>
       </motion.div>
