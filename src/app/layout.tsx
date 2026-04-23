@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { HackerBackground } from "@/components/HackerBackground";
 import { siteConfig } from "@/content/site.config";
+import { AppInitializer } from "@/components/AppInitializer";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -19,8 +20,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { AppLoader } from "@/components/AppLoader";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-mono">
-        <AppLoader>
+        <AppInitializer>
           <HackerBackground />
           {/* Header is shared across ALL pages — edit: src/content/site.config.ts */}
           <Header />
@@ -41,7 +40,7 @@ export default function RootLayout({
 
           {/* Footer is shared across ALL pages — edit: src/content/site.config.ts */}
           <Footer />
-        </AppLoader>
+        </AppInitializer>
       </body>
     </html>
   );
