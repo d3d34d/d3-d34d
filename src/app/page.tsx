@@ -1,7 +1,5 @@
 import { Hero } from "@/components/Hero";
 import { ProfileSection } from "@/components/ProfileSection";
-import { ProjectGrid } from "@/components/ProjectGrid";
-import { Blog } from "@/components/Blog";
 
 export default function Home() {
   return (
@@ -11,10 +9,6 @@ export default function Home() {
       <Hero />
       {/* Profile: edit src/content/profile.config.ts */}
       <ProfileSection />
-      {/* Projects: edit src/content/projects/ */}
-      <ProjectGrid />
-      {/* Blog: edit src/content/blog/ */}
-      <Blog />
     </div>
   );
 }
