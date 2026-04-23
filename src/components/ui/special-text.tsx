@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "motion/react";
 
 interface SpecialTextProps {
   children: string;
@@ -10,7 +10,6 @@ interface SpecialTextProps {
   className?: string;
   inView?: boolean;
   once?: boolean;
-  triggerOnHover?: boolean;
 }
 
 const RANDOM_CHARS = "_!X$0-+*#";
@@ -30,7 +29,6 @@ export function SpecialText({
   className = "",
   inView = false,
   once = true,
-  triggerOnHover = true,
 }: SpecialTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const isInView = useInView(containerRef, { once, margin: "-100px" });
@@ -53,14 +51,16 @@ export function SpecialText({
     startTimeoutRef.current = null;
   }
 
-  const startAnimation = useCallback(() => {
-    setHasStarted(true);
-    setDisplayText(" ".repeat(text.length));
-    setCurrentPhase("phase1");
-    setAnimationStep(0);
-  }, [text.length]);
+  function startAnimation() {
+    requestAnimationFrame(() => {
+      setHasStarted(true);
+      setDisplayText(" ".repeat(text.length));
+      setCurrentPhase("phase1");
+      setAnimationStep(0);
+    });
+  }
 
-  const runPhase1 = useCallback(() => {
+  const runPhase1 = () => {
     const maxSteps = text.length * 2;
     const currentLength = Math.min(animationStep + 1, text.length);
 
@@ -82,9 +82,9 @@ export function SpecialText({
       setCurrentPhase("phase2");
       setAnimationStep(0);
     }
-  }, [animationStep, text]);
+  };
 
-  const runPhase2 = useCallback(() => {
+  const runPhase2 = () => {
     const revealedCount = Math.floor(animationStep / 2);
     const chars: string[] = [];
 
@@ -115,13 +115,13 @@ export function SpecialText({
         intervalRef.current = null;
       }
     }
-  }, [animationStep, text]);
+  };
 
   useEffect(() => {
     if (shouldAnimate && !hasStarted) {
       clearStartTimeout();
       if (delay <= 0) {
-        requestAnimationFrame(() => startAnimation());
+        startAnimation();
         return;
       }
       startTimeoutRef.current = window.setTimeout(() => {
@@ -130,7 +130,7 @@ export function SpecialText({
       }, delay * 1000);
     }
     return () => clearStartTimeout();
-  }, [shouldAnimate, hasStarted, delay, startAnimation]);
+  }, [shouldAnimate, hasStarted, delay, text.length]);
 
   useEffect(() => {
     if (!hasStarted) {
@@ -154,11 +154,15 @@ export function SpecialText({
         clearInterval(intervalRef.current);
       }
     };
-  }, [currentPhase, animationStep, text, speed, hasStarted, runPhase1, runPhase2]);
+  }, [currentPhase, animationStep, text, speed, hasStarted]);
 
   useEffect(() => {
     if (hasStarted) {
-      // Avoid resetting if we're in the middle of an animation unless it's a forced restart
+      requestAnimationFrame(() => {
+        setDisplayText(" ".repeat(text.length));
+        setCurrentPhase("phase1");
+        setAnimationStep(0);
+      });
     }
 
     return () => {
@@ -172,14 +176,9 @@ export function SpecialText({
   return (
     <span
       ref={containerRef}
-      onMouseEnter={() => {
-        if (triggerOnHover) {
-          startAnimation();
-        }
-      }}
       className={`h-4.5 leading-5 inline-flex font-mono font-medium ${className}`}
     >
-      {displayText || children}
+      {displayText}
     </span>
   );
 }

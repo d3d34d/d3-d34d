@@ -11,8 +11,6 @@ interface StatsProps {
 // Color map for stat values
 const valueColor = "#00E3FF";
 
-import { SpecialText } from "./ui/special-text";
-
 export const Stats = ({ stats }: StatsProps) => {
   return (
     // ── Stats Grid ────────────────────────────────────────────
@@ -29,11 +27,11 @@ export const Stats = ({ stats }: StatsProps) => {
         >
           {/* Stat value (e.g. "$240.5M") */}
           <span className="mb-2 font-mono text-2xl font-bold" style={{ color: valueColor }}>
-            <SpecialText triggerOnHover={true}>{stat.value}</SpecialText>
+            {stat.value}
           </span>
           {/* Stat label (e.g. "TVL") */}
           <span className="font-mono text-sm uppercase text-muted-foreground">
-            <SpecialText triggerOnHover={true}>{stat.label}</SpecialText>
+            {stat.label}
           </span>
         </motion.div>
       ))}

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/content/site.config";
 import { HomeIcon, AboutIcon, ProjectsIcon, ExperienceIcon, BlogIcon, ContactIcon } from "./icons";
-import { SpecialText } from "./ui/special-text";
 
 // Map nav link names to their icons
 const iconMap: Record<string, React.ElementType> = {
@@ -16,7 +15,6 @@ const iconMap: Record<string, React.ElementType> = {
   Blog:       BlogIcon,
   Contact:    ContactIcon,
 };
-
 
 export const Header = () => {
   const pathname = usePathname();
@@ -33,7 +31,7 @@ export const Header = () => {
         <div className="hidden items-center font-mono text-sm text-primary md:flex">
           <Link href="/" className="hover:opacity-80">
             <span className="opacity-60">{">. "}</span>
-            <SpecialText triggerOnHover={true}>{siteConfig.terminalPath}</SpecialText>
+            {siteConfig.terminalPath}
           </Link>
         </div>
 
@@ -61,9 +59,7 @@ export const Header = () => {
                 )}
               >
                 <Icon className={cn("h-4 w-4", isActive ? "text-background" : "text-primary")} />
-                <span className="hidden sm:inline">
-                  <SpecialText triggerOnHover={true}>{link.name.toLowerCase()}</SpecialText>
-                </span>
+                <span className="hidden sm:inline">{link.name.toLowerCase()}</span>
               </Link>
             );
           })}

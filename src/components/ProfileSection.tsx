@@ -4,57 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { profileConfig } from "@/content/profile.config";
-import { SpecialText } from "./ui/special-text";
+import { ScrambleText } from "./ScrambleText";
 
-interface RainingChar {
-  char: string;
-  left: number;
-  top: number;
-  speed: number;
-  opacity: number;
-}
-
-const LocalRainingLetters = () => {
-  const [chars, setChars] = React.useState<RainingChar[]>([]);
-  
-  React.useEffect(() => {
-    const symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
-    const newChars = Array.from({ length: 20 }).map(() => ({
-      char: symbols[Math.floor(Math.random() * symbols.length)],
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      speed: 0.2 + Math.random() * 0.5,
-      opacity: 0.1 + Math.random() * 0.3,
-    }));
-    setChars(newChars);
-    
-    let frame: number;
-    const animate = () => {
-      setChars(prev => prev.map(c => ({
-        ...c,
-        top: c.top >= 100 ? -5 : c.top + c.speed,
-        char: Math.random() < 0.05 ? symbols[Math.floor(Math.random() * symbols.length)] : c.char
-      })));
-      frame = requestAnimationFrame(animate);
-    };
-    animate();
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40">
-      {chars.map((c, i) => (
-        <span 
-          key={i} 
-          className="absolute text-[10px] font-mono text-primary/40"
-          style={{ left: `${c.left}%`, top: `${c.top}%` }}
-        >
-          {c.char}
-        </span>
-      ))}
-    </div>
-  );
-};
 
 const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
   const [displayedText, setDisplayedText] = React.useState("");
@@ -110,15 +61,20 @@ export const ProfileSection = () => {
 
           <div className="flex flex-col gap-2 font-mono text-sm md:text-base">
             <p className="text-primary font-bold mb-1">
-              <SpecialText triggerOnHover={true} inView={true}>Portfolio Information:</SpecialText>
+              <TypewriterText text="Portfolio Information:" />
+              <motion.span
+                animate={{ opacity: [1, 1, 0, 0] }}
+                transition={{ repeat: Infinity, duration: 0.8, times: [0, 0.5, 0.51, 1], ease: "linear" }}
+                className="ml-1 inline-block h-[1em] w-[6px] bg-primary align-middle"
+              />
             </p>
             {profileConfig.details.map((detail, idx) => (
               <div key={detail.label} className="flex flex-col">
                 <span className="text-primary/70 text-xs md:text-sm leading-tight">
-                  <SpecialText triggerOnHover={true} delay={0.1 * idx}>{detail.label}</SpecialText>:
+                  <ScrambleText text={detail.label} delay={400 + idx * 100} />:
                 </span>
                 <span className="text-foreground leading-tight">
-                  <SpecialText triggerOnHover={true} delay={0.2 * idx}>{detail.value}</SpecialText>
+                  <ScrambleText text={detail.value} delay={600 + idx * 100} />
                 </span>
               </div>
             ))}
@@ -128,10 +84,10 @@ export const ProfileSection = () => {
         {/* Welcome Message */}
         <div className="flex flex-col gap-4">
           <h2 className="font-mono text-xl font-bold text-primary">
-            <SpecialText triggerOnHover={true} inView={true}>{profileConfig.welcomeTitle}</SpecialText>
+            {profileConfig.welcomeTitle}
           </h2>
           <p className="font-mono text-base leading-relaxed text-foreground/80">
-            <SpecialText triggerOnHover={true} inView={true} speed={10}>{profileConfig.welcomeDescription}</SpecialText>
+            {profileConfig.welcomeDescription}
           </p>
         </div>
       </motion.div>
