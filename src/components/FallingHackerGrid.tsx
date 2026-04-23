@@ -17,8 +17,6 @@ export function FallingHackerGrid({
   color = "#00FF9C", // Hacker green
   backgroundColor = "transparent",
   duration = 40, // Faster falling
-  blurIntensity = "0px", // Keep it sharp and visible
-  density = 1,
   className,
 }: FallingHackerGridProps) {
   const mouseX = useMotionValue(-1000);
@@ -68,7 +66,7 @@ export function FallingHackerGrid({
   const endPositions = "0px 1000px, 3px 1000px, 151.5px 1117.5px, 25px 1000px, 28px 1000px, 176.5px 1126px, 50px 1000px, 53px 1000px, 201.5px 1075px, 75px 1000px, 78px 1000px, 226.5px 1126.5px";
 
   // Using a custom hook for the dynamic mask to avoid SSR issues
-  const [maskStyle, setMaskStyle] = useState<any>({});
+  const [maskStyle, setMaskStyle] = useState<React.CSSProperties>({});
 
   useEffect(() => {
     const unsubscribeX = smoothMouseX.on("change", (latestX) => {

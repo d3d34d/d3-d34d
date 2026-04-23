@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface Dot {
   x: number;
@@ -40,7 +40,7 @@ export function InteractiveGrid({
   const dotsRef = useRef<Dot[]>([]);
   const minProxSquaredRef = useRef(params.minProximity * params.minProximity);
 
-  const createDots = (w: number, h: number) => {
+  const createDots = useCallback((w: number, h: number) => {
     const newDots: Dot[] = [];
     for (let x = 0; x < w + params.dotDistance; x += params.dotDistance) {
       for (let y = 0; y < h + params.dotDistance; y += params.dotDistance) {
@@ -85,7 +85,7 @@ export function InteractiveGrid({
       }
     }
     dotsRef.current = newDots;
-  };
+  }, [params.dotDistance]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -115,7 +115,7 @@ export function InteractiveGrid({
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [params.dotDistance]);
+  }, [createDots]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

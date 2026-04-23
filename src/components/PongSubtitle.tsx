@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 // Theme colors from globals.css
 const COLOR_PRIMARY = "#00FF9C";
 const COLOR_PRIMARY_DARK = "#004D30";
-const COLOR_BACKGROUND = "transparent";
 const BALL_COLOR = "#00FF9C";
 const PADDLE_COLOR = "#00FF9C";
 

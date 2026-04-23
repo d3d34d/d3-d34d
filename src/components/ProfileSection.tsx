@@ -6,8 +6,16 @@ import Image from "next/image";
 import { profileConfig } from "@/content/profile.config";
 import { ScrambleText } from "./ScrambleText";
 
+interface RainingChar {
+  char: string;
+  left: number;
+  top: number;
+  speed: number;
+  opacity: number;
+}
+
 const LocalRainingLetters = () => {
-  const [chars, setChars] = React.useState<any[]>([]);
+  const [chars, setChars] = React.useState<RainingChar[]>([]);
   
   React.useEffect(() => {
     const symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";

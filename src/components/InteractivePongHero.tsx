@@ -1,0 +1,319 @@
+"use client";
+
+import React, { useEffect, useRef, useCallback } from "react";
+
+// Theme colors
+const COLOR_PRIMARY = "#00FF9C";
+const COLOR_PRIMARY_DARK = "#004D30";
+const BALL_COLOR = "#00FF9C";
+const PADDLE_COLOR = "#00FF9C";
+
+const LETTER_SPACING = 1;
+const WORD_SPACING = 3;
+
+const PIXEL_MAP: Record<string, number[][]> = {
+  P: [[1, 1, 1, 1], [1, 0, 0, 1], [1, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0]],
+  R: [[1, 1, 1, 1], [1, 0, 0, 1], [1, 1, 1, 1], [1, 0, 1, 0], [1, 0, 0, 1]],
+  O: [[1, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 1]],
+  M: [[1, 0, 0, 0, 1], [1, 1, 0, 1, 1], [1, 0, 1, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1]],
+  T: [[1, 1, 1, 1, 1], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]],
+  I: [[1, 1, 1], [0, 1, 0], [0, 1, 0], [0, 1, 0], [1, 1, 1]],
+  N: [[1, 0, 0, 0, 1], [1, 1, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 0, 1, 1], [1, 0, 0, 0, 1]],
+  G: [[1, 1, 1, 1, 1], [1, 0, 0, 0, 0], [1, 0, 1, 1, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]],
+  S: [[1, 1, 1, 1], [1, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 1], [1, 1, 1, 1]],
+  A: [[0, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1]],
+  L: [[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 1, 1, 1]],
+  Y: [[1, 0, 0, 0, 1], [0, 1, 0, 1, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]],
+  U: [[1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 1]],
+  D: [[1, 1, 1, 0], [1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 0]],
+  E: [[1, 1, 1, 1], [1, 0, 0, 0], [1, 1, 1, 1], [1, 0, 0, 0], [1, 1, 1, 1]],
+  W: [[1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 1, 0, 1, 1], [1, 0, 0, 0, 1]],
+  B: [[1, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 0]],
+  V: [[1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [0, 1, 0, 1, 0], [0, 0, 1, 0, 0]],
+  F: [[1, 1, 1, 1], [1, 0, 0, 0], [1, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0]],
+  "3": [[1, 1, 1, 1], [0, 0, 0, 1], [0, 1, 1, 1], [0, 0, 0, 1], [1, 1, 1, 1]],
+  "'": [[0, 1], [0, 1], [0, 0], [0, 0], [0, 0]],
+};
+
+interface Pixel {
+  x: number;
+  y: number;
+  size: number;
+  hit: boolean;
+  isAscii?: boolean;
+}
+
+interface Ball {
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  radius: number;
+}
+
+interface Paddle {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  targetY: number;
+  isVertical: boolean;
+}
+
+interface InteractivePongHeroProps {
+  asciiArt: string;
+  subtitle: string;
+}
+
+export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pixelsRef = useRef<Pixel[]>([]);
+  const ballRef = useRef<Ball>({ x: 0, y: 0, dx: 0, dy: 0, radius: 0 });
+  const paddlesRef = useRef<Paddle[]>([]);
+  const scaleRef = useRef(1);
+
+  const initializeGame = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const scale = scaleRef.current;
+    const PIXEL_SIZE = 3 * scale;
+    const ASCII_PIXEL_SIZE = 4 * scale;
+    const BALL_SPEED = 5 * scale;
+
+    pixelsRef.current = [];
+
+    // ── 1. Process ASCII Art into Pixels ─────────────────────
+    const asciiLines = asciiArt.split("\n").filter(line => line.trim().length > 0);
+    const asciiLineHeight = 8 * scale;
+    const asciiCharWidth = 6 * scale;
+    
+    // Find the max width of ASCII art
+    const maxAsciiLineLength = Math.max(...asciiLines.map(line => line.length));
+    const totalAsciiWidth = maxAsciiLineLength * asciiCharWidth;
+    const startXAscii = (canvas.width - totalAsciiWidth) / 2;
+    const startYAscii = 40 * scale;
+
+    asciiLines.forEach((line, lineIdx) => {
+      line.split("").forEach((char, charIdx) => {
+        if (char !== " ") {
+          pixelsRef.current.push({
+            x: startXAscii + charIdx * asciiCharWidth,
+            y: startYAscii + lineIdx * asciiLineHeight,
+            size: ASCII_PIXEL_SIZE,
+            hit: false,
+            isAscii: true
+          });
+        }
+      });
+    });
+
+    // ── 2. Process Subtitle into Pixels ──────────────────────
+    const words = subtitle.toUpperCase() === "SENIOR WEB3 DEVELOPER'S PORTFOLIO"
+      ? ["SENIOR WEB3", "DEVELOPER'S PORTFOLIO"]
+      : [subtitle.toUpperCase()];
+
+    const calculateWordWidth = (word: string, size: number) => {
+      return (
+        word.split("").reduce((width, letter) => {
+          if (letter === " ") return width + WORD_SPACING * size;
+          const letterWidth = PIXEL_MAP[letter as keyof typeof PIXEL_MAP]?.[0]?.length ?? 3;
+          return width + letterWidth * size + LETTER_SPACING * size;
+        }, 0) - LETTER_SPACING * size
+      );
+    };
+
+    const lineHeights = words.length === 1 ? [5 * PIXEL_SIZE] : [5 * PIXEL_SIZE, 5 * PIXEL_SIZE];
+    const spaceBetweenLines = 12 * PIXEL_SIZE;
+    
+    let startYSubtitle = startYAscii + (asciiLines.length * asciiLineHeight) + (40 * scale);
+
+    words.forEach((line, lineIndex) => {
+      const totalWidth = calculateWordWidth(line, PIXEL_SIZE);
+      let startX = (canvas.width - totalWidth) / 2;
+
+      line.split("").forEach((letter) => {
+        if (letter === " ") {
+          startX += WORD_SPACING * PIXEL_SIZE;
+          return;
+        }
+        const pixelMap = PIXEL_MAP[letter as keyof typeof PIXEL_MAP];
+        if (!pixelMap) {
+          startX += 4 * PIXEL_SIZE;
+          return;
+        }
+
+        for (let i = 0; i < pixelMap.length; i++) {
+          for (let j = 0; j < pixelMap[i].length; j++) {
+            if (pixelMap[i][j]) {
+              pixelsRef.current.push({
+                x: startX + j * PIXEL_SIZE,
+                y: startYSubtitle + i * PIXEL_SIZE,
+                size: PIXEL_SIZE,
+                hit: false
+              });
+            }
+          }
+        }
+        startX += (pixelMap[0].length + LETTER_SPACING) * PIXEL_SIZE;
+      });
+      startYSubtitle += lineHeights[lineIndex] + spaceBetweenLines;
+    });
+
+    // ── 3. Initialize Ball & Paddles ────────────────────────
+    ballRef.current = {
+      x: canvas.width * 0.9,
+      y: canvas.height * 0.1,
+      dx: -BALL_SPEED,
+      dy: BALL_SPEED,
+      radius: PIXEL_SIZE * 1.5,
+    };
+
+    const paddleWidth = 6 * scale;
+    const paddleLength = 60 * scale;
+
+    paddlesRef.current = [
+      { x: 0, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
+      { x: canvas.width - paddleWidth, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
+      { x: canvas.width / 2 - paddleLength / 2, y: 0, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
+      { x: canvas.width / 2 - paddleLength / 2, y: canvas.height - paddleWidth, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
+    ];
+  }, [asciiArt, subtitle]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resizeCanvas = () => {
+      const container = canvas.parentElement;
+      if (!container) return;
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+      scaleRef.current = Math.min(canvas.width / 800, 1);
+      initializeGame();
+    };
+
+    const updateGame = () => {
+      const ball = ballRef.current;
+      const paddles = paddlesRef.current;
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      // Wall bounce (fallback)
+      if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) ball.dy *= -1;
+      if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.dx *= -1;
+
+      // Paddle collisions
+      paddles.forEach((paddle) => {
+        if (paddle.isVertical) {
+          if (
+            ball.x - ball.radius < paddle.x + paddle.width &&
+            ball.x + ball.radius > paddle.x &&
+            ball.y > paddle.y &&
+            ball.y < paddle.y + paddle.height
+          ) {
+            ball.dx = -Math.abs(ball.dx) * (paddle.x === 0 ? -1 : 1);
+          }
+        } else {
+          if (
+            ball.y - ball.radius < paddle.y + paddle.height &&
+            ball.y + ball.radius > paddle.y &&
+            ball.x > paddle.x &&
+            ball.x < paddle.x + paddle.width
+          ) {
+            ball.dy = -Math.abs(ball.dy) * (paddle.y === 0 ? -1 : 1);
+          }
+        }
+      });
+
+      // AI follow
+      paddles.forEach((paddle) => {
+        if (paddle.isVertical) {
+          paddle.targetY = ball.y - paddle.height / 2;
+          paddle.targetY = Math.max(0, Math.min(canvas.height - paddle.height, paddle.targetY));
+          paddle.y += (paddle.targetY - paddle.y) * 0.12;
+        } else {
+          paddle.targetY = ball.x - paddle.width / 2;
+          paddle.targetY = Math.max(0, Math.min(canvas.width - paddle.width, paddle.targetY));
+          paddle.x += (paddle.targetY - paddle.x) * 0.12;
+        }
+      });
+
+      // Pixel collisions
+      pixelsRef.current.forEach((pixel) => {
+        if (
+          !pixel.hit &&
+          ball.x + ball.radius > pixel.x &&
+          ball.x - ball.radius < pixel.x + pixel.size &&
+          ball.y + ball.radius > pixel.y &&
+          ball.y - ball.radius < pixel.y + pixel.size
+        ) {
+          pixel.hit = true;
+          const centerX = pixel.x + pixel.size / 2;
+          const centerY = pixel.y + pixel.size / 2;
+          if (Math.abs(ball.x - centerX) > Math.abs(ball.y - centerY)) {
+            ball.dx *= -1;
+          } else {
+            ball.dy *= -1;
+          }
+        }
+      });
+
+      // Reset logic: if more than 80% of pixels hit, reset
+      const hitCount = pixelsRef.current.filter(p => p.hit).length;
+      if (hitCount > pixelsRef.current.length * 0.9) {
+        pixelsRef.current.forEach(p => p.hit = false);
+      }
+    };
+
+    const drawGame = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      pixelsRef.current.forEach((pixel) => {
+        ctx.fillStyle = pixel.hit ? COLOR_PRIMARY_DARK : COLOR_PRIMARY;
+        if (pixel.isAscii) {
+          ctx.fillRect(pixel.x, pixel.y, pixel.size, pixel.size);
+        } else {
+          ctx.fillRect(pixel.x, pixel.y, pixel.size, pixel.size);
+        }
+      });
+
+      ctx.fillStyle = BALL_COLOR;
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = PADDLE_COLOR;
+      paddles.forEach((paddle) => {
+        ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+      });
+    };
+
+    let animationId: number;
+    const gameLoop = () => {
+      updateGame();
+      drawGame();
+      animationId = requestAnimationFrame(gameLoop);
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    gameLoop();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+      cancelAnimationFrame(animationId);
+    };
+  }, [initializeGame]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="h-full w-full"
+      aria-label="Interactive Pong Hero Section"
+    />
+  );
+}
