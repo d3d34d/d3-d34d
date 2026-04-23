@@ -17,5 +17,5 @@ export const heroConfig = {
 `,
 
   // ── SUBTITLE ──────────────────────────────────────────────────
-  subtitle: "Senior Web3 Developer's Portfolio", // ← Text below the ASCII art
+  subtitle: "Cybersecurity Analyst's Portfolio", // ← Text below the ASCII art
 };

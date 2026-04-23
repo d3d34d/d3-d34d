@@ -8,7 +8,7 @@ export const siteConfig = {
   ownerName: "Dhebobrotha Dhibo",           // ← YOUR NAME (used in footer, meta)
   siteTitle: "CLIfolio | Dhebobrotha Dhibo", // ← Browser tab title
   siteDescription:
-    "Senior Web3 Developer & Architect. Building the future of the internet through code.",
+    "Cybersecurity Analyst & IT Professional. Specializing in threat detection, network security, and vulnerability management.",
 
   // ── HEADER ────────────────────────────────────────────────────
   terminalPath: "dhebo.dhibo@portfolio:~$",  // ← Top-left terminal text
