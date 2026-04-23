@@ -85,7 +85,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     // ── 1. Process Name into Pixels ─────────────────────
     const name = "DHEBOBROTHA DHIBO";
     const words = [subtitle.toUpperCase()];
-    const NAME_PIXEL_SIZE = 4.5 * scale;
+    const NAME_PIXEL_SIZE = 7 * scale;
     
     const calculateWordWidth = (word: string, size: number) => {
       return (
@@ -99,7 +99,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
 
     const totalNameWidth = calculateWordWidth(name, NAME_PIXEL_SIZE);
     let startXName = (canvas.width - totalNameWidth) / 2;
-    const startYName = 50 * scale;
+    const startYName = 30 * scale;
 
     name.split("").forEach((letter) => {
       if (letter === " ") {
@@ -129,7 +129,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     const lineHeights = [5 * PIXEL_SIZE];
     const spaceBetweenLines = 15 * PIXEL_SIZE;
     
-    let startYSubtitle = startYName + (5 * NAME_PIXEL_SIZE) + (30 * scale);
+    let startYSubtitle = startYName + (5 * NAME_PIXEL_SIZE) + (40 * scale);
 
     words.forEach((line, lineIndex) => {
       const totalWidth = calculateWordWidth(line, PIXEL_SIZE);
@@ -176,10 +176,8 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     const paddleLength = 60 * scale;
 
     paddlesRef.current = [
-      { x: 0, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
-      { x: canvas.width - paddleWidth, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
-      { x: canvas.width / 2 - paddleLength / 2, y: 0, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
-      { x: canvas.width / 2 - paddleLength / 2, y: canvas.height - paddleWidth, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
+      { x: 2, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
+      { x: canvas.width - paddleWidth - 2, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
     ];
   }, [subtitle]);
 
