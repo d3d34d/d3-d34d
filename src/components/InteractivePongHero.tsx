@@ -78,7 +78,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     
     const scale = scaleRef.current;
     const PIXEL_SIZE = 3 * scale;
-    const BALL_SPEED = 3.5 * scale;
+    const BALL_SPEED = 2 * scale;
     
     ballRef.current = {
       x: canvas.width / 2,
@@ -216,10 +216,14 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
       ball.x += ball.dx;
       ball.y += ball.dy;
 
-      // Out of bounds reset
-      if (ball.y < -ball.radius || ball.y > canvas.height + ball.radius || 
-          ball.x < -ball.radius || ball.x > canvas.width + ball.radius) {
-        resetGame();
+      // Wall bounce
+      if (ball.y < ball.radius || ball.y > canvas.height - ball.radius) {
+        ball.dy *= -1;
+        ball.y = Math.max(ball.radius, Math.min(canvas.height - ball.radius, ball.y));
+      }
+      if (ball.x < ball.radius || ball.x > canvas.width - ball.radius) {
+        ball.dx *= -1;
+        ball.x = Math.max(ball.radius, Math.min(canvas.width - ball.radius, ball.x));
       }
 
       // Paddle collisions
