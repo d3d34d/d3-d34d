@@ -97,9 +97,9 @@ export const ProfileSection = () => {
         {/* Info List - Terminal Style */}
         <div 
           key={animationKey}
-          className="relative p-6 rounded-lg bg-black/70 border border-primary/20 backdrop-blur-sm max-w-2xl"
+          className="relative p-4 rounded-lg bg-black/70 border border-primary/20 backdrop-blur-sm max-w-2xl"
         >
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-3">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500/80" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -108,12 +108,12 @@ export const ProfileSection = () => {
             <span className="text-xs font-mono text-primary/70 ml-2">terminal@localhost:~$</span>
           </div>
 
-          <div className="flex flex-col gap-4 font-mono text-sm md:text-base">
-            <p className="text-primary font-bold mb-2">Portfolio Information:</p>
+          <div className="flex flex-col gap-2 font-mono text-sm md:text-base">
+            <p className="text-primary font-bold mb-1">Portfolio Information:</p>
             {profileConfig.details.map((detail, idx) => (
               <div key={detail.label} className="flex flex-col">
-                <span className="text-primary/70">{detail.label}:</span>
-                <span className="text-foreground">{detail.value}</span>
+                <span className="text-primary/70 text-xs md:text-sm leading-tight">{detail.label}:</span>
+                <span className="text-foreground leading-tight">{detail.value}</span>
               </div>
             ))}
           </div>
