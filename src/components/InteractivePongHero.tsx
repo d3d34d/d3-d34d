@@ -72,13 +72,30 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
   const paddlesRef = useRef<Paddle[]>([]);
   const scaleRef = useRef(1);
 
+  const resetGame = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const scale = scaleRef.current;
+    const PIXEL_SIZE = 3 * scale;
+    const BALL_SPEED = 3.5 * scale;
+    
+    ballRef.current = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      dx: (Math.random() > 0.5 ? 1 : -1) * BALL_SPEED,
+      dy: (Math.random() > 0.5 ? 1 : -1) * BALL_SPEED,
+      radius: PIXEL_SIZE * 1.5,
+    };
+    pixelsRef.current.forEach(p => p.hit = false);
+  }, []);
+
   const initializeGame = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const scale = scaleRef.current;
     const PIXEL_SIZE = 3 * scale;
-    const BALL_SPEED = 5 * scale;
 
     pixelsRef.current = [];
 
@@ -164,13 +181,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     });
 
     // ── 3. Initialize Ball & Paddles ────────────────────────
-    ballRef.current = {
-      x: canvas.width * 0.9,
-      y: canvas.height * 0.1,
-      dx: -BALL_SPEED,
-      dy: BALL_SPEED,
-      radius: PIXEL_SIZE * 1.5,
-    };
+    resetGame();
 
     const paddleWidth = 6 * scale;
     const paddleLength = 60 * scale;
@@ -181,7 +192,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
       { x: canvas.width / 2 - paddleLength / 2, y: 2, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
       { x: canvas.width / 2 - paddleLength / 2, y: canvas.height - paddleWidth - 2, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
     ];
-  }, [subtitle]);
+  }, [subtitle, resetGame]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -205,12 +216,15 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
       ball.x += ball.dx;
       ball.y += ball.dy;
 
-      // Wall bounce (fallback)
-      if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) ball.dy *= -1;
-      if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.dx *= -1;
+      // Out of bounds reset
+      if (ball.y < -ball.radius || ball.y > canvas.height + ball.radius || 
+          ball.x < -ball.radius || ball.x > canvas.width + ball.radius) {
+        resetGame();
+      }
 
       // Paddle collisions
       paddles.forEach((paddle) => {
+        const jitter = (Math.random() - 0.5) * 0.2;
         if (paddle.isVertical) {
           if (
             ball.x - ball.radius < paddle.x + paddle.width &&
@@ -218,7 +232,10 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
             ball.y > paddle.y &&
             ball.y < paddle.y + paddle.height
           ) {
-            ball.dx = -Math.abs(ball.dx) * (paddle.x === 0 ? -1 : 1);
+            ball.dx = -Math.abs(ball.dx) * (paddle.x <= 2 ? -1 : 1);
+            ball.dy += jitter;
+            // Prevent sticking
+            ball.x = paddle.x <= 2 ? paddle.width + ball.radius + 1 : canvas.width - paddle.width - ball.radius - 3;
           }
         } else {
           if (
@@ -227,7 +244,10 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
             ball.x > paddle.x &&
             ball.x < paddle.x + paddle.width
           ) {
-            ball.dy = -Math.abs(ball.dy) * (paddle.y === 0 ? -1 : 1);
+            ball.dy = -Math.abs(ball.dy) * (paddle.y <= 2 ? -1 : 1);
+            ball.dx += jitter;
+            // Prevent sticking
+            ball.y = paddle.y <= 2 ? paddle.height + ball.radius + 1 : canvas.height - paddle.height - ball.radius - 3;
           }
         }
       });
