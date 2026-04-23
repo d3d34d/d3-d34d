@@ -109,11 +109,22 @@ export const ProfileSection = () => {
           </div>
 
           <div className="flex flex-col gap-2 font-mono text-sm md:text-base">
-            <p className="text-primary font-bold mb-1">Portfolio Information:</p>
+            <p className="text-primary font-bold mb-1">
+              <TypewriterText text="Portfolio Information:" />
+              <motion.span
+                animate={{ opacity: [1, 1, 0, 0] }}
+                transition={{ repeat: Infinity, duration: 0.8, times: [0, 0.5, 0.51, 1], ease: "linear" }}
+                className="ml-1 inline-block h-[1em] w-[6px] bg-primary align-middle"
+              />
+            </p>
             {profileConfig.details.map((detail, idx) => (
               <div key={detail.label} className="flex flex-col">
-                <span className="text-primary/70 text-xs md:text-sm leading-tight">{detail.label}:</span>
-                <span className="text-foreground leading-tight">{detail.value}</span>
+                <span className="text-primary/70 text-xs md:text-sm leading-tight">
+                  <ScrambleText text={detail.label} delay={400 + idx * 100} />:
+                </span>
+                <span className="text-foreground leading-tight">
+                  <ScrambleText text={detail.value} delay={600 + idx * 100} />
+                </span>
               </div>
             ))}
           </div>
