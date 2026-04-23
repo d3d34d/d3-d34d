@@ -178,6 +178,8 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     paddlesRef.current = [
       { x: 2, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
       { x: canvas.width - paddleWidth - 2, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },
+      { x: canvas.width / 2 - paddleLength / 2, y: 2, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
+      { x: canvas.width / 2 - paddleLength / 2, y: canvas.height - paddleWidth - 2, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
     ];
   }, [subtitle]);
 
