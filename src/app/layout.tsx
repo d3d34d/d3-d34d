@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { AppLoader } from "@/components/AppLoader";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,17 +29,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-mono">
-        <HackerBackground />
-        {/* Header is shared across ALL pages — edit: src/content/site.config.ts */}
-        <Header />
+        <AppLoader>
+          <HackerBackground />
+          {/* Header is shared across ALL pages — edit: src/content/site.config.ts */}
+          <Header />
 
-        {/* Page content injected here */}
-        <div className="flex-1">
-          {children}
-        </div>
+          {/* Page content injected here */}
+          <div className="flex-1">
+            {children}
+          </div>
 
-        {/* Footer is shared across ALL pages — edit: src/content/site.config.ts */}
-        <Footer />
+          {/* Footer is shared across ALL pages — edit: src/content/site.config.ts */}
+          <Footer />
+        </AppLoader>
       </body>
     </html>
   );
