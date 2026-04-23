@@ -104,8 +104,8 @@ export const ProfileSection = () => {
             <span className="mr-2 text-primary">{">"}</span>
             <TypewriterText text={profileConfig.infoTitle} />
             <motion.span
-              animate={{ opacity: [1, 0] }}
-              transition={{ repeat: Infinity, duration: 0.8, ease: "steps(2)" }}
+              animate={{ opacity: [1, 1, 0, 0] }}
+              transition={{ repeat: Infinity, duration: 0.8, times: [0, 0.5, 0.51, 1], ease: "linear" }}
               className="ml-1 inline-block h-[1.2em] w-[8px] bg-secondary align-middle"
             />
           </h3>
