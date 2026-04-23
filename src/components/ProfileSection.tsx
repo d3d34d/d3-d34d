@@ -94,30 +94,26 @@ export const ProfileSection = () => {
         transition={{ duration: 0.8 }}
         className="flex flex-col gap-8 md:max-w-[60%]"
       >
-        {/* Info List */}
+        {/* Info List - Terminal Style */}
         <div 
           key={animationKey}
-          className="relative flex flex-col gap-4 overflow-hidden border border-primary/20 bg-primary/5 p-6 backdrop-blur-sm"
+          className="relative p-6 rounded-lg bg-black/70 border border-primary/20 backdrop-blur-sm max-w-2xl"
         >
-          <LocalRainingLetters />
-          <h3 className="relative flex items-center font-mono text-lg font-bold text-secondary">
-            <span className="mr-2 text-primary">{">"}</span>
-            <TypewriterText text={profileConfig.infoTitle} />
-            <motion.span
-              animate={{ opacity: [1, 1, 0, 0] }}
-              transition={{ repeat: Infinity, duration: 0.8, times: [0, 0.5, 0.51, 1], ease: "linear" }}
-              className="ml-1 inline-block h-[1.2em] w-[8px] bg-secondary align-middle"
-            />
-          </h3>
-          <div className="relative flex flex-col gap-2 font-mono text-base">
+          <div className="flex items-center gap-2 mb-6">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-3 h-3 rounded-full bg-green-500/80" />
+            </div>
+            <span className="text-xs font-mono text-primary/70 ml-2">terminal@localhost:~$</span>
+          </div>
+
+          <div className="flex flex-col gap-4 font-mono text-sm md:text-base">
+            <p className="text-primary font-bold mb-2">Portfolio Information:</p>
             {profileConfig.details.map((detail, idx) => (
-              <div key={detail.label} className="flex gap-2">
-                <span className="text-primary/70">
-                  <ScrambleText text={detail.label} delay={400 + idx * 100} />:
-                </span>
-                <span className="text-foreground">
-                  <ScrambleText text={detail.value} delay={600 + idx * 100} />
-                </span>
+              <div key={detail.label} className="flex flex-col">
+                <span className="text-primary/70">{detail.label}:</span>
+                <span className="text-foreground">{detail.value}</span>
               </div>
             ))}
           </div>
