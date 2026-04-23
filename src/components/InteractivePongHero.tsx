@@ -31,6 +31,7 @@ const PIXEL_MAP: Record<string, number[][]> = {
   B: [[1, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 0]],
   V: [[1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [0, 1, 0, 1, 0], [0, 0, 1, 0, 0]],
   F: [[1, 1, 1, 1], [1, 0, 0, 0], [1, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0]],
+  H: [[1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1]],
   "3": [[1, 1, 1, 1], [0, 0, 0, 1], [0, 1, 1, 1], [0, 0, 0, 1], [1, 1, 1, 1]],
   "'": [[0, 1], [0, 1], [0, 0], [0, 0], [0, 0]],
 };
@@ -61,11 +62,10 @@ interface Paddle {
 }
 
 interface InteractivePongHeroProps {
-  asciiArt: string;
   subtitle: string;
 }
 
-export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroProps) {
+export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pixelsRef = useRef<Pixel[]>([]);
   const ballRef = useRef<Ball>({ x: 0, y: 0, dx: 0, dy: 0, radius: 0 });
@@ -78,55 +78,58 @@ export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroP
 
     const scale = scaleRef.current;
     const PIXEL_SIZE = 3 * scale;
-    const ASCII_PIXEL_SIZE = 4 * scale;
     const BALL_SPEED = 5 * scale;
 
     pixelsRef.current = [];
 
-    // ── 1. Process ASCII Art into Pixels ─────────────────────
-    const asciiLines = asciiArt.split("\n").filter(line => line.trim().length > 0);
-    const asciiLineHeight = 8 * scale;
-    const asciiCharWidth = 6 * scale;
+    // ── 1. Process Name into Pixels ─────────────────────
+    const name = "DHEBOBROTHA DHIBO";
+    const words = [subtitle.toUpperCase()];
+    const NAME_PIXEL_SIZE = 4.5 * scale;
     
-    // Find the max width of ASCII art
-    const maxAsciiLineLength = Math.max(...asciiLines.map(line => line.length));
-    const totalAsciiWidth = maxAsciiLineLength * asciiCharWidth;
-    const startXAscii = (canvas.width - totalAsciiWidth) / 2;
-    const startYAscii = 40 * scale;
-
-    asciiLines.forEach((line, lineIdx) => {
-      line.split("").forEach((char, charIdx) => {
-        if (char !== " ") {
-          pixelsRef.current.push({
-            x: startXAscii + charIdx * asciiCharWidth,
-            y: startYAscii + lineIdx * asciiLineHeight,
-            size: ASCII_PIXEL_SIZE,
-            hit: false,
-            isAscii: true
-          });
-        }
-      });
-    });
-
-    // ── 2. Process Subtitle into Pixels ──────────────────────
-    const words = subtitle.toUpperCase() === "SENIOR WEB3 DEVELOPER'S PORTFOLIO"
-      ? ["SENIOR WEB3", "DEVELOPER'S PORTFOLIO"]
-      : [subtitle.toUpperCase()];
-
     const calculateWordWidth = (word: string, size: number) => {
       return (
         word.split("").reduce((width, letter) => {
           if (letter === " ") return width + WORD_SPACING * size;
-          const letterWidth = PIXEL_MAP[letter as keyof typeof PIXEL_MAP]?.[0]?.length ?? 3;
+          const letterWidth = PIXEL_MAP[letter as keyof typeof PIXEL_MAP]?.[0]?.length ?? 4;
           return width + letterWidth * size + LETTER_SPACING * size;
         }, 0) - LETTER_SPACING * size
       );
     };
 
-    const lineHeights = words.length === 1 ? [5 * PIXEL_SIZE] : [5 * PIXEL_SIZE, 5 * PIXEL_SIZE];
-    const spaceBetweenLines = 12 * PIXEL_SIZE;
+    const totalNameWidth = calculateWordWidth(name, NAME_PIXEL_SIZE);
+    let startXName = (canvas.width - totalNameWidth) / 2;
+    const startYName = 50 * scale;
+
+    name.split("").forEach((letter) => {
+      if (letter === " ") {
+        startXName += WORD_SPACING * NAME_PIXEL_SIZE;
+        return;
+      }
+      const pixelMap = PIXEL_MAP[letter as keyof typeof PIXEL_MAP];
+      if (!pixelMap) return;
+
+      for (let i = 0; i < pixelMap.length; i++) {
+        for (let j = 0; j < pixelMap[i].length; j++) {
+          if (pixelMap[i][j]) {
+            pixelsRef.current.push({
+              x: startXName + j * NAME_PIXEL_SIZE,
+              y: startYName + i * NAME_PIXEL_SIZE,
+              size: NAME_PIXEL_SIZE,
+              hit: false,
+              isAscii: true
+            });
+          }
+        }
+      }
+      startXName += (pixelMap[0].length + LETTER_SPACING) * NAME_PIXEL_SIZE;
+    });
+
+    // ── 2. Process Subtitle into Pixels ──────────────────────
+    const lineHeights = [5 * PIXEL_SIZE];
+    const spaceBetweenLines = 15 * PIXEL_SIZE;
     
-    let startYSubtitle = startYAscii + (asciiLines.length * asciiLineHeight) + (40 * scale);
+    let startYSubtitle = startYName + (5 * NAME_PIXEL_SIZE) + (30 * scale);
 
     words.forEach((line, lineIndex) => {
       const totalWidth = calculateWordWidth(line, PIXEL_SIZE);
@@ -178,7 +181,7 @@ export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroP
       { x: canvas.width / 2 - paddleLength / 2, y: 0, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
       { x: canvas.width / 2 - paddleLength / 2, y: canvas.height - paddleWidth, width: paddleLength, height: paddleWidth, targetY: canvas.width / 2 - paddleLength / 2, isVertical: false },
     ];
-  }, [asciiArt, subtitle]);
+  }, [subtitle]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -191,7 +194,7 @@ export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroP
       if (!container) return;
       canvas.width = container.clientWidth;
       canvas.height = container.clientHeight;
-      scaleRef.current = Math.min(canvas.width / 800, 1);
+      scaleRef.current = Math.min(canvas.width / 700, 1);
       initializeGame();
     };
 
@@ -283,11 +286,11 @@ export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroP
 
       ctx.fillStyle = BALL_COLOR;
       ctx.beginPath();
-      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.arc(ballRef.current.x, ballRef.current.y, ballRef.current.radius, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = PADDLE_COLOR;
-      paddles.forEach((paddle) => {
+      paddlesRef.current.forEach((paddle) => {
         ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
       });
     };
@@ -312,7 +315,7 @@ export function InteractivePongHero({ asciiArt, subtitle }: InteractivePongHeroP
   return (
     <canvas
       ref={canvasRef}
-      className="h-full w-full"
+      className="absolute inset-0 h-full w-full"
       aria-label="Interactive Pong Hero Section"
     />
   );

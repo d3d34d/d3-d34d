@@ -76,6 +76,15 @@ const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) =
 };
 
 export const ProfileSection = () => {
+  const [animationKey, setAnimationKey] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimationKey(prev => prev + 1);
+    }, 10000); // 10 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="profile-info-section" className="mx-auto mb-20 flex w-full flex-col gap-10 md:flex-row md:items-start md:justify-between lg:mb-[100px]">
       {/* ── Left Side: Text Info ────────────────────────────────── */}
@@ -86,7 +95,10 @@ export const ProfileSection = () => {
         className="flex flex-col gap-8 md:max-w-[60%]"
       >
         {/* Info List */}
-        <div className="relative flex flex-col gap-4 overflow-hidden border border-primary/20 bg-primary/5 p-6 backdrop-blur-sm">
+        <div 
+          key={animationKey}
+          className="relative flex flex-col gap-4 overflow-hidden border border-primary/20 bg-primary/5 p-6 backdrop-blur-sm"
+        >
           <LocalRainingLetters />
           <h3 className="relative flex items-center font-mono text-lg font-bold text-secondary">
             <span className="mr-2 text-primary">{">"}</span>
