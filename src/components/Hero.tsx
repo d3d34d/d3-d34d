@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { heroConfig } from "@/content/hero.config";
+import { PongSubtitle } from "./PongSubtitle";
 
 export const Hero = () => {
   return (
@@ -22,14 +23,9 @@ export const Hero = () => {
         {heroConfig.asciiArt}
       </pre>
 
-      {/* ── Subtitle ───────────────────────────────────────────── */}
+      {/* ── Subtitle (Interactive Pong Game) ───────────────────── */}
       {/* Edit: src/content/hero.config.ts → subtitle */}
-      <div
-        id="hero-subtitle"
-        className="text-center font-mono text-xl font-bold uppercase tracking-[1px] text-primary"
-      >
-        {heroConfig.subtitle}
-      </div>
+      <PongSubtitle text={heroConfig.subtitle} />
     </motion.section>
   );
 };

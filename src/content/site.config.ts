@@ -5,13 +5,13 @@
 
 export const siteConfig = {
   // ── IDENTITY ──────────────────────────────────────────────────
-  ownerName: "Alex Chen",                  // ← YOUR NAME (used in footer, meta)
-  siteTitle: "CLIfolio | Alex Chen",       // ← Browser tab title
+  ownerName: "Dhebobrotha Dhibo",           // ← YOUR NAME (used in footer, meta)
+  siteTitle: "CLIfolio | Dhebobrotha Dhibo", // ← Browser tab title
   siteDescription:
-    "Senior Full Stack Engineer & DeFi Architect. Building the future of the internet through code.",
+    "Senior Web3 Developer & Architect. Building the future of the internet through code.",
 
   // ── HEADER ────────────────────────────────────────────────────
-  terminalPath: "alex.chen@portfolio:~$",  // ← Top-left terminal text
+  terminalPath: "dhebo.dhibo@portfolio:~$",  // ← Top-left terminal text
   statusText: "Available",                 // ← Top-right status label
   statusColor: "#00E3FF",                  // ← Dot color (cyan by default)
 
@@ -26,6 +26,6 @@ export const siteConfig = {
   ],
 
   // ── FOOTER ────────────────────────────────────────────────────
-  footerCopyright: "Alex Chen",            // ← Name in "© [Name] | [Year]"
+  footerCopyright: "Dhebobrotha Dhibo",    // ← Name in "© [Name] | [Year]"
   footerVersion: "v20.07.2025",           // ← Version tag badge
 };

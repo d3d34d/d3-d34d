@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { FallingHackerGrid } from "@/components/FallingHackerGrid";
 import { siteConfig } from "@/content/site.config";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-mono">
+        <FallingHackerGrid />
         {/* Header is shared across ALL pages — edit: src/content/site.config.ts */}
         <Header />
 

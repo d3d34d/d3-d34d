@@ -76,9 +76,6 @@
   }
   body {
     @apply bg-background text-foreground font-mono;
-    background-image: 
-      radial-gradient(circle at 2px 2px, rgba(0, 255, 156, 0.05) 1px, transparent 0);
-    background-size: 24px 24px;
   }
   html {
     @apply font-mono antialiased;
