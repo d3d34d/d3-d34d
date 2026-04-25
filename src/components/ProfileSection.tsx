@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { profileConfig } from "@/content/profile.config";
+import { siteConfig } from "@/content/site.config";
 import { ScrambleText } from "./ScrambleText";
 
 
@@ -56,7 +57,7 @@ export const ProfileSection = () => {
               <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
               <div className="w-3 h-3 rounded-full bg-green-500/80" />
             </div>
-            <span className="text-xs font-mono text-primary/70 ml-2">terminal@localhost:~$</span>
+            <span className="text-xs font-mono text-primary/70 ml-2">{siteConfig.terminalPath}</span>
           </div>
 
           <div className="flex flex-col gap-2 font-mono text-sm md:text-base">

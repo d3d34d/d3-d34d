@@ -2,8 +2,8 @@ import Image from "next/image";
 import { aboutConfig } from "@/content/about.config";
 
 export const metadata = {
-  title: "About | CLIfolio",
-  description: "Learn about Alex Chen — Senior Web3 Developer.",
+  title: "About | Dhebobrotha Dhibo",
+  description: "Learn about Dhebobrotha Dhibo — Cybersecurity Analyst.",
 };
 
 export default function AboutPage() {

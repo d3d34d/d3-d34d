@@ -2,8 +2,8 @@ import Image from "next/image";
 import { allProjects, type Project } from "@/content/projects/index";
 
 export const metadata = {
-  title: "Projects | CLIfolio",
-  description: "All projects by Alex Chen.",
+  title: "Projects | Dhebobrotha Dhibo",
+  description: "All projects by Dhebobrotha Dhibo.",
 };
 
 const tagColorMap: Record<string, string> = {

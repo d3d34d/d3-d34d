@@ -1,8 +1,8 @@
 import { contactConfig } from "@/content/contact.config";
 
 export const metadata = {
-  title: "Contact | CLIfolio",
-  description: "Get in touch with Alex Chen.",
+  title: "Contact | Dhebobrotha Dhibo",
+  description: "Get in touch with Dhebobrotha Dhibo.",
 };
 
 export default function ContactPage() {

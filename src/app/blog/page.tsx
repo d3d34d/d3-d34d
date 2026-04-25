@@ -1,8 +1,8 @@
 import { allPosts } from "@/content/blog/index";
 
 export const metadata = {
-  title: "Blog | CLIfolio",
-  description: "Articles and insights on Web3, DeFi, and blockchain development.",
+  title: "Blog | Dhebobrotha Dhibo",
+  description: "Articles and insights on Cybersecurity, threat detection, and IT systems.",
 };
 
 const categoryColorMap: Record<string, string> = {

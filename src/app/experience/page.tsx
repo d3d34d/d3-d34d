@@ -1,7 +1,7 @@
 import { experienceConfig } from "@/content/experience/index";
 
 export const metadata = {
-  title: "Experience | CLIfolio",
+  title: "Experience | Dhebobrotha Dhibo",
   description: "Work history and professional experience.",
 };
 
