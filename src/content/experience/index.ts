@@ -5,70 +5,62 @@
 
 export const experienceConfig = {
   heading: "Work Experience",
-  subheading: "My professional journey in Web3 and software development.",
+  subheading: "Professional experience in Data Analysis, Physical Security, and Cybersecurity operations.",
 
   // ── WORK HISTORY ──────────────────────────────────────────────
   // Add or remove roles. The list is displayed top-to-bottom (most recent first).
   roles: [
     {
-      // ── Role ──────────────────────────────────────────────────
-      title: "Senior Web3 Engineer",           // ← Job title
-      company: "DeFiCorp Labs",                // ← Company name
-      companyUrl: "https://example.com",       // ← Company website (or "#")
-      location: "Remote",                      // ← Location
-      startDate: "Jan 2023",                   // ← Start date (freeform text)
-      endDate: "Present",                      // ← End date or "Present"
-      type: "Full-time",                       // ← Employment type
-
-      // ── Summary ───────────────────────────────────────────────
+      title: "Cybersecurity Specialist",
+      company: "Freelance / Projects",
+      companyUrl: "#",
+      location: "Winnipeg, MB",
+      startDate: "2026",
+      endDate: "Present",
+      type: "Contract",
       summary:
-        "Led smart contract development for a DeFi protocol managing $240M+ TVL. Architected yield aggregation strategies and implemented zero-exploit security practices.",
-
-      // ── Key Achievements ──────────────────────────────────────
-      // Each string becomes a bullet point
+        "Focusing on network security auditing, vulnerability assessments, and implementing defensive security measures for local organizations and personal research projects.",
       achievements: [
-        "Built and audited 12 Solidity contracts with zero critical vulnerabilities",
-        "Reduced gas costs by 40% through EIP-2929 and storage optimization",
-        "Led a team of 4 engineers across frontend, backend, and smart contracts",
-        "Integrated Chainlink oracles and The Graph for real-time data feeds",
+        "Identified and documented network vulnerabilities using tools like Nmap and Wireshark",
+        "Configured secure VPN connections and firewall rules to protect digital assets",
+        "Conducted phishing simulation and analysis to improve organizational security posture",
+        "Documented security incidents and performed root cause analysis for technical problems",
       ],
-
-      // ── Tech Stack ────────────────────────────────────────────
-      stack: ["Solidity", "TypeScript", "React", "Hardhat", "AWS"],
+      stack: ["Nmap", "Wireshark", "Metasploit", "Firewalls", "VPNs"],
     },
     {
-      title: "Full Stack Developer",
-      company: "CryptoStudio",
-      companyUrl: "#",
-      location: "San Francisco, CA",
-      startDate: "Mar 2021",
-      endDate: "Dec 2022",
-      type: "Full-time",
+      title: "Data Analyst",
+      company: "TELUS Digital",
+      companyUrl: "https://www.telus.com/en/digital",
+      location: "Winnipeg, MB (Remote)",
+      startDate: "Feb 2026",
+      endDate: "Present",
+      type: "Remote",
       summary:
-        "Developed NFT marketplace and DAO tooling for enterprise clients. Built cross-chain bridges and wallet integration flows.",
+        "Utilizing Open Source Intelligence (OSINT) and advanced analytics to maintain high-quality data integrity standards.",
       achievements: [
-        "Shipped NFT marketplace processing $1M+ monthly in secondary sales",
-        "Implemented gasless meta-transactions using EIP-2612 permit signatures",
-        "Delivered DAO governance dashboard for 3 client protocols",
+        "Utilize Open Source Intelligence (OSINT) techniques to conduct in-depth web research",
+        "Perform cross-source data validation to mitigate inaccurate data, ensuring the Confidentiality, Integrity, and Availability (CIA) of mapping systems",
+        "Apply strong analytical and problem-solving skills to maintain high-quality mapping standards",
       ],
-      stack: ["Next.js", "Solidity", "GraphQL", "Ethers.js", "PostgreSQL"],
+      stack: ["OSINT", "Data Analytics", "CIA Triad", "Research"],
     },
     {
-      title: "Frontend Engineer",
-      company: "StartupXYZ",
-      companyUrl: "#",
-      location: "New York, NY",
-      startDate: "Jun 2019",
-      endDate: "Feb 2021",
-      type: "Full-time",
+      title: "Security Professional",
+      company: "GardaWorld",
+      companyUrl: "https://www.garda.com/",
+      location: "Winnipeg, MB",
+      startDate: "Oct 2025",
+      endDate: "Present",
+      type: "On-Call",
       summary:
-        "Built consumer-facing React applications and internal tooling. First exposure to Web3 — integrated MetaMask and wallet providers into existing SaaS products.",
+        "Monitoring physical and digital surveillance infrastructure to respond to unauthorized intrusions and maintain secure environments.",
       achievements: [
-        "Rebuilt core dashboard, improving performance by 60%",
-        "Integrated WalletConnect and MetaMask for Web3 login",
-        "Mentored 2 junior engineers",
+        "Monitor physical and digital surveillance infrastructure to detect and respond to unauthorized intrusions",
+        "Execute incident response protocols across diverse environments",
+        "Maintain high situational awareness to identify environmental vulnerabilities",
       ],
-      stack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
+      stack: ["Physical Security", "Surveillance", "Incident Response", "Vulnerability Identification"],
     },
   ],
 };

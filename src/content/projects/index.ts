@@ -1,28 +1,11 @@
 // ================================================================
 // PROJECTS INDEX
 // ================================================================
-// HOW TO ADD A NEW PROJECT:
-//   1. Create a new folder:  src/content/projects/my-project/
-//   2. Copy any config.ts from an existing project into it
-//   3. Edit the config (change id, title, description, etc.)
-//   4. Add the image to: public/content/projects/my-project/thumbnail.jpg
-//   5. Import and add it to the `allProjects` array below
-//
-// HOW TO REMOVE A PROJECT:
-//   • Just delete the import and remove it from allProjects[]
-//   • The folder can stay or be deleted — your choice
-//
-// HOW TO REORDER PROJECTS:
-//   • Change the `order` value in each project's config.ts
-//   • Lower number = shown first
-// ================================================================
 
-import { project as defiVault }    from "./defi-vault/config";
-import { project as projectAlpha } from "./project-alpha/config";
-import { project as projectBeta }  from "./project-beta/config";
+import { project as amarBornomala } from "./amar-bornomala/config";
 
 // All projects — sorted by the `order` field in their config
-export const allProjects = [defiVault, projectAlpha, projectBeta].sort(
+export const allProjects = [amarBornomala].sort(
   (a, b) => a.order - b.order
 );
 
@@ -54,5 +37,6 @@ export type Project = {
   tags: ProjectTag[];
   liveUrl?: string;
   codeUrl?: string;
+  codeUrlLabel?: string;
   stats: ProjectStat[];
 };

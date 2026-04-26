@@ -32,7 +32,7 @@ export const project = {
 
   // ── LINKS ─────────────────────────────────────────────────────
   liveUrl: "#",
-  codeUrl: "#",
+  codeUrl: "https://github.com",
 
   // ── STATS ─────────────────────────────────────────────────────
   stats: [],

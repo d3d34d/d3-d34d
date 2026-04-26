@@ -6,34 +6,25 @@
 export const contactConfig = {
   // ── HEADING ───────────────────────────────────────────────────
   heading: "Get In Touch",                   // ← Page title
-  subheading: "Open to opportunities, collaborations, and interesting conversations.", // ← Subtitle
+  subheading: "Ready to harden your infrastructure or audit your network? I help organizations secure their digital assets through proactive threat detection and offensive defense strategies. Whether it's a security audit or a deep dive into network vulnerabilities, let's connect and build something resilient.", // ← Subtitle
 
   // ── DIRECT CONTACT ────────────────────────────────────────────
-  email: "alex@example.com",                 // ← Your email address
-  emailLabel: "Send a message",             // ← Button label for email
+  email: "dhibodas@gmail.com",           // ← Your email address
+  phone: "+1 (647) 673-2363",                // ← Your phone number
+  emailLabel: "Send secure message",             // ← Button label for email
 
   // ── SOCIAL LINKS ──────────────────────────────────────────────
   // Add or remove social links. Unused ones can be deleted or set to "".
   socials: [
     {
       platform: "GitHub",                    // ← Display name
-      url: "https://github.com/alex-chen",   // ← Your profile URL
-      handle: "@alex-chen",                  // ← Shown as label
-    },
-    {
-      platform: "Twitter / X",
-      url: "https://twitter.com/alexchen",
-      handle: "@alexchen",
+      url: "https://github.com/d3-d34d",   // ← Your profile URL
+      handle: "@d3-d34d",                  // ← Shown as label
     },
     {
       platform: "LinkedIn",
-      url: "https://linkedin.com/in/alexchen",
-      handle: "Alex Chen",
-    },
-    {
-      platform: "Telegram",
-      url: "https://t.me/alexchen",
-      handle: "@alexchen",
+      url: "https://www.linkedin.com/in/d3d34d/",
+      handle: "d3.d34d",
     },
   ],
 

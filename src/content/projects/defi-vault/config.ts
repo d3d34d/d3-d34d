@@ -33,7 +33,7 @@ export const project = {
 
   // ── LINKS ─────────────────────────────────────────────────────
   liveUrl: "#",                              // ← Live demo URL (or "#" to hide)
-  codeUrl: "#",                              // ← GitHub / source URL (or "#" to hide)
+  codeUrl: "https://github.com",                              // ← GitHub / source URL (or "#" to hide)
 
   // ── STATS (only shown for featured project) ────────────────────
   // Add, remove, or reorder stats. Shown in a 2×2 grid beside the project.

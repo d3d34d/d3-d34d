@@ -33,7 +33,7 @@ export const project = {
 
   // ── LINKS ─────────────────────────────────────────────────────
   liveUrl: "#",
-  codeUrl: "#",
+  codeUrl: "https://github.com",
 
   // ── STATS ─────────────────────────────────────────────────────
   // Only shown if this project is "featured: true"

@@ -11,15 +11,14 @@ export const profileConfig = {
     { label: "Based in", value: "Winnipeg, MB" },
     { label: "Profession", value: "Cybersecurity Analyst" },
     { label: "Email", value: "ddhibboreal@gmail.com" },
-    { label: "Availability", value: "From August" },
   ],
 
   // ── WELCOME MESSAGE ───────────────────────────────────────────
   welcomeTitle: "Welcome to Dhebobrotha Dhibo's Cybersecurity Portfolio!",
   welcomeDescription:
-    "Aspiring Cybersecurity Professional with 7+ years of IT experience. Specialized in network security, threat detection, and vulnerability management.",
+    "Cybersecurity Specialist with 7+ years of IT experience. Expert in network security, threat analysis, and digital defense.",
 
   // ── PROFILE IMAGE ─────────────────────────────────────────────
-  imagePath: "/images/profile.jpg",
+  imagePath: "/images/dhebo_profile.jpg",
   imageAlt: "Dhebobrotha Dhibo - Cybersecurity Analyst",
 };

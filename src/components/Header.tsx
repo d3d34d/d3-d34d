@@ -18,11 +18,34 @@ const iconMap: Record<string, React.ElementType> = {
 
 export const Header = () => {
   const pathname = usePathname();
+  const [isVisible, setIsVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    if (pathname !== "/") {
+      setIsVisible(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      // Hide header if scrolled down on home page
+      if (window.scrollY > 50) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
 
   return (
     <header
       id="site-header"
-      className="sticky top-0 z-50 h-[76px] w-full border-b border-primary bg-background/85 backdrop-blur-md"
+      className={cn(
+        "sticky top-0 z-50 h-[76px] w-full border-b border-primary bg-background/85 backdrop-blur-md transition-transform duration-500 ease-in-out",
+        !isVisible && pathname === "/" ? "-translate-y-full" : "translate-y-0"
+      )}
     >
       <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-4 lg:px-[110px]">
 

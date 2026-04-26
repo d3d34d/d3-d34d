@@ -5,10 +5,10 @@
 
 export const siteConfig = {
   // ── IDENTITY ──────────────────────────────────────────────────
-  ownerName: "Dhebobrotha Dhibo",           // ← YOUR NAME (used in footer, meta)
-  siteTitle: "Dhebobrotha Dhibo", // ← Browser tab title
+  ownerName: "d3.d34d",           // ← YOUR NAME (used in footer, meta)
+  siteTitle: "d3.d34d | Security", // ← Browser tab title
   siteDescription:
-    "Cybersecurity Analyst & IT Professional. Specializing in threat detection, network security, and vulnerability management.",
+    "Security Analyst & IT Professional. Specializing in threat detection, network security, and offensive defense.",
 
   // ── HEADER ────────────────────────────────────────────────────
   terminalPath: "d3.d34d@portfolio:~$",  // ← Top-left terminal text
@@ -26,6 +26,6 @@ export const siteConfig = {
   ],
 
   // ── FOOTER ────────────────────────────────────────────────────
-  footerCopyright: "Dhebobrotha Dhibo",    // ← Name in "© [Name] | [Year]"
+  footerCopyright: "d3.d34d",    // ← Name in "© [Name] | [Year]"
   footerVersion: "v20.07.2025",           // ← Version tag badge
 };

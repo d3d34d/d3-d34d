@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock, Shield, Scan } from 'lucide-react'
+import { Lock, Scan } from 'lucide-react'
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(' ')
@@ -151,12 +151,6 @@ export const ScanningOverlay: React.FC<ScanningOverlayProps> = ({
                 </div>
               </div>
 
-              <div className="mt-6 flex items-center justify-center gap-2">
-                <Shield className="w-4 h-4 text-[#0CF2A0]" />
-                <span className="text-xs font-mono text-gray-500">
-                  Secure Connection Established
-                </span>
-              </div>
             </motion.div>
           </div>
         </motion.div>

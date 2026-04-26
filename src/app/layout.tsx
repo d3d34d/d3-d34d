@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { HackerBackground } from "@/components/HackerBackground";
 import { siteConfig } from "@/content/site.config";
 import { AppInitializer } from "@/components/AppInitializer";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -30,19 +31,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-mono">
-        <AppInitializer>
-          <HackerBackground />
-          {/* Header is shared across ALL pages — edit: src/content/site.config.ts */}
-          <Header />
+        <SmoothScroll>
+          <AppInitializer>
+            <HackerBackground />
+            {/* Header is shared across ALL pages — edit: src/content/site.config.ts */}
+            <Header />
 
-          {/* Page content injected here */}
-          <div className="flex-1">
-            {children}
-          </div>
+            {/* Page content injected here */}
+            <div className="flex-1">
+              {children}
+            </div>
 
-          {/* Footer is shared across ALL pages — edit: src/content/site.config.ts */}
-          <Footer />
-        </AppInitializer>
+            {/* Footer is shared across ALL pages — edit: src/content/site.config.ts */}
+            <Footer />
+          </AppInitializer>
+        </SmoothScroll>
       </body>
     </html>
   );
