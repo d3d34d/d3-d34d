@@ -18,8 +18,8 @@ export const contactConfig = {
   socials: [
     {
       platform: "GitHub",                    // ← Display name
-      url: "https://github.com/d3-d34d",   // ← Your profile URL
-      handle: "@d3-d34d",                  // ← Shown as label
+      url: "https://github.com/d3d34d",   // ← Your profile URL
+      handle: "@d3d34d",                  // ← Shown as label
     },
     {
       platform: "LinkedIn",
