@@ -172,9 +172,9 @@ export default function AboutPage() {
                     </p>
                     <p className="font-mono text-xs text-muted-foreground mt-1 flex items-center gap-2">
                       <MatrixHoverText text={edu.institution} /> 
-                      {edu.year && (
+                      {(edu as any).year && (
                         <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted/50 border border-border">
-                          <MatrixHoverText text={edu.year} />
+                          <MatrixHoverText text={(edu as any).year} />
                         </span>
                       )}
                     </p>
