@@ -205,7 +205,7 @@ export const HackerBackground: React.FC<HackerBackgroundProps> = ({ showSettings
   };
 
   return (
-    <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden bg-black">
+    <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden bg-black pointer-events-none">
       <canvas 
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"

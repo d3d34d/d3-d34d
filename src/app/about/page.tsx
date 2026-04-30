@@ -5,7 +5,7 @@ import { Download, Terminal, ChevronRight } from "lucide-react";
 import { MatrixHoverText } from "@/components/MatrixHoverText";
 
 export const metadata = {
-  title: `About | ${aboutConfig.name}`,
+  title: "d3.d34d | About",
   description: `Learn about ${aboutConfig.name} — ${aboutConfig.title}.`,
 };
 

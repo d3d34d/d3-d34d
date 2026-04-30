@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Report Not Found" };
 
   return {
-    title: `${post.title} | d3.d34d`,
+    title: `d3.d34d | ${post.title}`,
     description: post.excerpt,
   };
 }

@@ -6,7 +6,7 @@
 export const siteConfig = {
   // ── IDENTITY ──────────────────────────────────────────────────
   ownerName: "d3.d34d",           // ← YOUR NAME (used in footer, meta)
-  siteTitle: "d3.d34d | Security", // ← Browser tab title
+  siteTitle: "d3.d34d | Home", // ← Browser tab title
   siteDescription:
     "Security Analyst & IT Professional. Specializing in threat detection, network security, and offensive defense.",
 

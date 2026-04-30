@@ -6,7 +6,7 @@ import { Eye, Globe } from "lucide-react";
 import { MatrixHoverText } from "@/components/MatrixHoverText";
 
 export const metadata = {
-  title: "Projects | Dhebobrotha Dhibo",
+  title: "d3.d34d | Projects",
   description: "All projects by Dhebobrotha Dhibo.",
 };
 
