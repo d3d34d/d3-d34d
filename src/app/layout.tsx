@@ -7,6 +7,7 @@ import { HackerBackground } from "@/components/HackerBackground";
 import { siteConfig } from "@/content/site.config";
 import { AppInitializer } from "@/components/AppInitializer";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({
             <Footer />
           </AppInitializer>
         </SmoothScroll>
+        <SpeedInsights />
       </body>
     </html>
   );
