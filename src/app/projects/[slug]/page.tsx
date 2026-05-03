@@ -120,7 +120,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center border border-primary px-6 py-4 font-mono font-bold text-primary transition-colors hover:bg-primary/10"
                 >
-                  GITHUB REPOSITORY
+                  {project.codeUrlLabel || "GITHUB"}
                 </a>
               )}
             </div>

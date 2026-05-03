@@ -3,9 +3,13 @@
 // ================================================================
 
 import { project as amarBornomala } from "./amar-bornomala/config";
+import { project as whoKnowsYourPassword } from "./who-knows-your-password/config";
 
 // All projects — sorted by the `order` field in their config
-export const allProjects = [amarBornomala].sort(
+export const allProjects = [
+  amarBornomala,
+  whoKnowsYourPassword
+].sort(
   (a, b) => a.order - b.order
 );
 

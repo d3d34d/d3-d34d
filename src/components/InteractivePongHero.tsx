@@ -87,8 +87,8 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     if (!canvas) return;
     
     const scale = scaleRef.current;
-    const PIXEL_SIZE = 3 * scale;
-    const BALL_SPEED = 2 * scale;
+    const PIXEL_SIZE = 3;
+    const BALL_SPEED = 2;
     
     ballRef.current = {
       x: canvas.width / 2,
@@ -105,7 +105,7 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     if (!canvas) return;
 
     const scale = scaleRef.current;
-    const PIXEL_SIZE = 3 * scale;
+    const TEXT_PIXEL_SIZE = 3 * scale;
 
     pixelsRef.current = [];
 
@@ -153,23 +153,23 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     });
 
     // ── 2. Process Subtitle into Pixels ──────────────────────
-    const lineHeights = [5 * PIXEL_SIZE];
-    const spaceBetweenLines = 15 * PIXEL_SIZE;
+    const lineHeights = [5 * TEXT_PIXEL_SIZE];
+    const spaceBetweenLines = 15 * TEXT_PIXEL_SIZE;
     
     let startYSubtitle = startYName + (5 * NAME_PIXEL_SIZE) + (40 * scale);
 
     words.forEach((line, lineIndex) => {
-      const totalWidth = calculateWordWidth(line, PIXEL_SIZE);
+      const totalWidth = calculateWordWidth(line, TEXT_PIXEL_SIZE);
       let startX = (canvas.width - totalWidth) / 2;
 
       line.split("").forEach((letter) => {
         if (letter === " ") {
-          startX += WORD_SPACING * PIXEL_SIZE;
+          startX += WORD_SPACING * TEXT_PIXEL_SIZE;
           return;
         }
         const pixelMap = PIXEL_MAP[letter as keyof typeof PIXEL_MAP];
         if (!pixelMap) {
-          startX += 4 * PIXEL_SIZE;
+          startX += 4 * TEXT_PIXEL_SIZE;
           return;
         }
 
@@ -177,15 +177,15 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
           for (let j = 0; j < pixelMap[i].length; j++) {
             if (pixelMap[i][j]) {
               pixelsRef.current.push({
-                x: startX + j * PIXEL_SIZE,
-                y: startYSubtitle + i * PIXEL_SIZE,
-                size: PIXEL_SIZE,
+                x: startX + j * TEXT_PIXEL_SIZE,
+                y: startYSubtitle + i * TEXT_PIXEL_SIZE,
+                size: TEXT_PIXEL_SIZE,
                 hit: false
               });
             }
           }
         }
-        startX += (pixelMap[0].length + LETTER_SPACING) * PIXEL_SIZE;
+        startX += (pixelMap[0].length + LETTER_SPACING) * TEXT_PIXEL_SIZE;
       });
       startYSubtitle += lineHeights[lineIndex] + spaceBetweenLines;
     });
@@ -193,8 +193,8 @@ export function InteractivePongHero({ subtitle }: InteractivePongHeroProps) {
     // ── 3. Initialize Ball & Paddles ────────────────────────
     resetGame();
 
-    const paddleWidth = 6 * scale;
-    const paddleLength = 60 * scale;
+    const paddleWidth = 6;
+    const paddleLength = 60;
 
     paddlesRef.current = [
       { x: 2, y: canvas.height / 2 - paddleLength / 2, width: paddleWidth, height: paddleLength, targetY: canvas.height / 2 - paddleLength / 2, isVertical: true },

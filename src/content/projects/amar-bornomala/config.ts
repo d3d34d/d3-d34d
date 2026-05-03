@@ -17,8 +17,7 @@ export const project: Project = {
     { label: "Mobile Web", color: "blue" },
     { label: "Interactive", color: "purple" }
   ],
-  liveUrl: "https://amar-bornomala-learn-bangla-475126623981.us-east1.run.app",
-  codeUrl: "https://amar-bornomala-learn-bangla-475126623981.us-east1.run.app",
+  codeUrl: "https://amar-bornomala-learn-bangla-960584269942.us-east1.run.app",
   codeUrlLabel: "Demo",
   stats: [
     { label: "Language", value: "Multi" },
